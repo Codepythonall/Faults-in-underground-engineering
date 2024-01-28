@@ -71,218 +71,13 @@ sys.path.append(os.getcwd())
 from pathlib import Path
 st.set_page_config(layout="wide")
 
-a=pd.read_csv(Path(__file__).parent / "Data/GEoREST_Fault.csv")
 
-
-
-
-
-fig1 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='project_type',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 11),
-                        mapbox_style="carto-positron",
-                        opacity=0.5, 
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig1)
-st.write ("Figure 1. project_type")
-
-
-fig4 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_formation',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 12),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig4)
-st.write ("Figure 4. rock_formation")
-
-
-
-fig5 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_strat',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 12),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig5)
-st.write ("Figure 5. rock_strat")
-
-
-fig7 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_fr_dens_max',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 12),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig7)
-st.write ("Figure 7. rock_fr_dens_max")
-
-
-fig9 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_dens_max',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(2450, 2700),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig9)
-st.write ("Figure 9. rock_dens_max")
-
-
-fig12 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_poro_mean',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 0.5),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig12)
-st.write ("Figure 12. rock_poro_mean")
-
-
-
-fig14 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_perm_mean',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 1e-12),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig14)
-st.write ("Figure 14. rock_perm_mean")
-
-
-st.write("Data is collected by HiQuake (https://inducedearthquakes.org/)")
-
-a=pd.read_csv(Path(__file__).parent / "Data/GEoREST_Fault.csv")
-st.write("Item type: rock_perm_mean, fault_perm_max, seism_events, moment_max...")
-st.text_input("Type the interested item", key="columns")
-if st.session_state.columns:
-    r1=a.groupby(st.session_state.columns).size()
-    
-    options1 = {
-        "color":'#ff4060',
-        "tooltip": {
-      "trigger": 'axis',
-      "axisPointer": {
-        "type": 'shadow'
-      }
-    },
-        "xAxis": {
-            "type": "category",
-            "data": r1.index.tolist(),
-            "axisTick": {"alignWithLabel": True},
-        },
-        "yAxis": {"type": "value"},
-        "series": [
-            {"data": r1.values.tolist(), "type": "bar"}
-        ],
-    }
-    st_echarts(options=options1)
-
-
-
-
+b=pd.read_csv(Path(__file__).parent / "Data/Hostrock information.csv")
 # Throught the selectbox to dreaw the echart
 optionA1 = st.selectbox(
     'Which item do you like best?',
-    a.columns.tolist())
-r1=a.groupby(optionA1).size()
+    b.columns.tolist())
+r1=b.groupby(optionA1).size()
 
 options1 = {
     "color":'#ff4060',
@@ -307,25 +102,403 @@ st_echarts(options=options1)
 
 
 
-st.write("Advanced search")
+a=pd.read_csv(Path(__file__).parent / "Data/GEoREST_Fault.csv")
+fig1 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_formation',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 500),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
 
-optionB1 = st.selectbox(
-    'Which energy class are you interested in?',
-    a["project_type"].unique())
-optionB2 = st.slider('latitude',-90.,a.latitude.max(),(-40.,80.))
-optionB3 = st.slider('longitude',-180.,a.longitude.max(),(-150.,200.))
-optionB4 = st.multiselect(
-    'Please select Parameters you are interested in',
-    a.columns,
-    ["sub_class", "rock_perm_mean", "fault_perm_max", "seism_events", "moment_max", "inj_rate_max", "rock_fr_dens_max", "rock_ucs_max", "site_depth_bas_max", "site_sv_max", "site_shmax_max", "site_shmin_max", "fault_dip_min", "site_T_max"])
-FinalSelect=a[(a["moment_max"]==optionB1)&(a.latitude>optionB2[0])&(a.latitude<optionB2[1])
-              &(a.longitude>optionB3[0])&(a.longitude<optionB3[1])][optionB4]
+st.plotly_chart(fig1)
+st.write ("Figure 1. rock_formation")
 
-FinalSelect
+fig2 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_strat',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 600),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig2)
+st.write ("Figure 2. rock_strat")
+
+fig3 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_fr_dens_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 80),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig3)
+st.write ("Figure 3. rock_fr_dens_max")
+
+
+fig4 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_dens_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(2500, 3000),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig4)
+st.write ("Figure 4. rock_dens_max")
+
+fig5 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_poro_mean',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 0.5),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig5)
+st.write ("Figure 5. rock_poro_mean")
+
+
+fig6 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_perm_mean',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 0.000000000006),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig6)
+st.write ("Figure 6. rock_perm_mean")
+
+fig7 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_E_mean',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 100),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig7)
+st.write ("Figure 7. rock_E_meanx")
+
+
+fig8 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_nu_mean',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 0.35),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig8)
+st.write ("Figure 8. rock_nu_mean")
 
 
 
+fig9 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_K_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 120),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig9)
+st.write ("Figure 9. rock_K_max")
+
+fig10 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_G_min',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 40),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig10)
+st.write ("Figure 10. rock_G_min")
 
 
+fig11 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_biot_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0.2, 1.1),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
 
+st.plotly_chart(fig11)
+st.write ("Figure 11. rock_biot_max")
+
+fig12 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_phi_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(20, 70),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig12)
+st.write ("Figure 12. rock_phi_max")
+
+fig13 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_c_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 100),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig13)
+st.write ("Figure 13. rock_c_max")
+
+fig14 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_ucs_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 420),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig14)
+st.write ("Figure 14. rock_ucs_max")
+
+
+fig15 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_T0_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 32),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig15)
+st.write ("Figure 15. rock_T0_max")
+
+
+fig16 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_lambda_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 5),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig16)
+st.write ("Figure 16. rock_lambda_max")
+
+fig17 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='rock_beta_min',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 0.00009),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig17)
+st.write ("Figure 17. rock_beta_min")
 
