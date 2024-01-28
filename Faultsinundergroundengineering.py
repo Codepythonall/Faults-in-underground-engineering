@@ -172,62 +172,14 @@ fig1 = px.scatter_mapbox(a,
                         zoom=0.1)
 
 st.plotly_chart(fig1)
-st.write ("Figure 1. project_type")
+st.write ("Figure 2. project_type")
 
 
-fig14 = px.scatter_mapbox(a, 
-                        lat='latitude', 
-                        lon='longitude', 
-                        color='rock_perm_mean',
-                        color_continuous_scale=[                
-                            '#800080',
-                            '#0000FF',
-                            '#00FFFF',
-                            '#008000',
-                            '#FFFF00',
-                            '#FFA500',
-                            '#FF0000',
-                        ],
-                        range_color=(0, 1e-12),
-                        mapbox_style="carto-positron",
-                        opacity=0.5,
-                        labels={'diff_percentage':'Difference Percentage'},
-                        center={"lat": 53, "lon": -113},
-                        zoom=0.1)
-
-st.plotly_chart(fig14)
-st.write ("Figure 14. rock_perm_mean")
 
 
 st.write("Data is collected by HiQuake (https://inducedearthquakes.org/)")
 
 a=pd.read_csv(Path(__file__).parent / "Data/GEoREST_Fault.csv")
-st.write("Item type: rock_perm_mean, fault_perm_max, seism_events, moment_max...")
-st.text_input("Type the interested item", key="columns")
-if st.session_state.columns:
-    r1=a.groupby(st.session_state.columns).size()
-    
-    options1 = {
-        "color":'#ff4060',
-        "tooltip": {
-      "trigger": 'axis',
-      "axisPointer": {
-        "type": 'shadow'
-      }
-    },
-        "xAxis": {
-            "type": "category",
-            "data": r1.index.tolist(),
-            "axisTick": {"alignWithLabel": True},
-        },
-        "yAxis": {"type": "value"},
-        "series": [
-            {"data": r1.values.tolist(), "type": "bar"}
-        ],
-    }
-    st_echarts(options=options1)
-
-
 
 
 # Throught the selectbox to dreaw the echart
@@ -259,21 +211,18 @@ st_echarts(options=options1)
 
 
 
-st.write("Advanced search")
+# st.write("Advanced search")
 
-optionB1 = st.selectbox(
-    'Which energy class are you interested in?',
-    a["project_type"].unique())
-optionB2 = st.slider('latitude',-90.,a.latitude.max(),(-40.,80.))
-optionB3 = st.slider('longitude',-180.,a.longitude.max(),(-150.,200.))
-optionB4 = st.multiselect(
-    'Please select Parameters you are interested in',
-    a.columns,
-    ["sub_class", "rock_perm_mean", "fault_perm_max", "seism_events", "moment_max", "inj_rate_max", "rock_fr_dens_max", "rock_ucs_max", "site_depth_bas_max", "site_sv_max", "site_shmax_max", "site_shmin_max", "fault_dip_min", "site_T_max"])
-FinalSelect=a[(a["moment_max"]==optionB1)&(a.latitude>optionB2[0])&(a.latitude<optionB2[1])
-              &(a.longitude>optionB3[0])&(a.longitude<optionB3[1])][optionB4]
+# optionB1 = st.selectbox(
+#     'Which energy class are you interested in?',
+#     a["project_type"].unique())
+# optionB4 = st.multiselect(
+#     'Please select Parameters you are interested in',
+#     a.columns,
+#     ["sub_class", "seism_events", "moment_max", "inj_rate_max", "fault_dip_min"])
+# FinalSelect=a[(a["moment_max"]==optionB1)&[optionB4]]
 
-FinalSelect
+# FinalSelect
 
 
 
