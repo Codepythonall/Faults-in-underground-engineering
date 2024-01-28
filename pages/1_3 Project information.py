@@ -71,11 +71,43 @@ sys.path.append(os.getcwd())
 from pathlib import Path
 st.set_page_config(layout="wide")
 
+
+b=pd.read_csv(Path(__file__).parent / "Data/Project information.csv")
+# Throught the selectbox to dreaw the echart
+optionA1 = st.selectbox(
+    'Which item do you like best?',
+    b.columns.tolist())
+r1=b.groupby(optionA1).size()
+
+options1 = {
+    "color":'#ff4060',
+    "tooltip": {
+  "trigger": 'axis',
+  "axisPointer": {
+    "type": 'shadow'
+  }
+},
+    "xAxis": {
+        "type": "category",
+        "data": r1.index.tolist(),
+        "axisTick": {"alignWithLabel": True},
+    },
+    "yAxis": {"type": "value"},
+    "series": [
+        {"data": r1.values.tolist(), "type": "bar"}
+    ],
+}
+st_echarts(options=options1)
+
+
+
+
+
 a=pd.read_csv(Path(__file__).parent / "Data/GEoREST_Fault.csv")
-fig2 = px.scatter_mapbox(a, 
+fig1 = px.scatter_mapbox(a, 
                         lat='latitude', 
                         lon='longitude', 
-                        color='location',
+                        color='inj_depth_min',
                         color_continuous_scale=[                
                             '#800080',
                             '#0000FF',
@@ -85,7 +117,30 @@ fig2 = px.scatter_mapbox(a,
                             '#FFA500',
                             '#FF0000',
                         ],
-                        range_color=(0, 12),
+                        range_color=(0, 9000),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig1)
+st.write ("Figure 1. inj_depth_min")
+
+fig2 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_depth_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 9500),
                         mapbox_style="carto-positron",
                         opacity=0.5,
                         labels={'diff_percentage':'Difference Percentage'},
@@ -93,12 +148,12 @@ fig2 = px.scatter_mapbox(a,
                         zoom=0.1)
 
 st.plotly_chart(fig2)
-st.write ("Figure 2. location")
+st.write ("Figure 2. inj_depth_max")
 
 fig3 = px.scatter_mapbox(a, 
                         lat='latitude', 
                         lon='longitude', 
-                        color='sub_class',
+                        color='inj_type',
                         color_continuous_scale=[                
                             '#800080',
                             '#0000FF',
@@ -108,7 +163,7 @@ fig3 = px.scatter_mapbox(a,
                             '#FFA500',
                             '#FF0000',
                         ],
-                        range_color=(0, 12),
+                        range_color=(0, 80),
                         mapbox_style="carto-positron",
                         opacity=0.5,
                         labels={'diff_percentage':'Difference Percentage'},
@@ -116,5 +171,241 @@ fig3 = px.scatter_mapbox(a,
                         zoom=0.1)
 
 st.plotly_chart(fig3)
-st.write ("Figure 3. sub_class")
+st.write ("Figure 3. inj_type")
+
+
+fig4 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='int_start',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 500),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig4)
+st.write ("Figure 4. int_start")
+
+fig5 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_fluid',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 500),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig5)
+st.write ("Figure 5. inj_fluid")
+
+
+fig6 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_T',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 250),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig6)
+st.write ("Figure 6. inj_T")
+
+fig7 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_rate_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 4),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig7)
+st.write ("Figure 7. inj_rate_max")
+
+
+fig8 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_vol_min',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 7100000),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig8)
+st.write ("Figure 8. inj_vol_min")
+
+
+
+fig9 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_vol_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 10100000),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig9)
+st.write ("Figure 9. inj_vol_max")
+
+fig10 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_net_vol_min',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 100000000),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig10)
+st.write ("Figure 10. inj_net_vol_min")
+
+
+fig11 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_net_vol_max',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 6e6),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig11)
+st.write ("Figure 11. inj_net_vol_max")
+
+fig12 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_up_p',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 95),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig12)
+st.write ("Figure 12. inj_up_p")
+
+fig13 = px.scatter_mapbox(a, 
+                        lat='latitude', 
+                        lon='longitude', 
+                        color='inj_down_p',
+                        color_continuous_scale=[                
+                            '#800080',
+                            '#0000FF',
+                            '#00FFFF',
+                            '#008000',
+                            '#FFFF00',
+                            '#FFA500',
+                            '#FF0000',
+                        ],
+                        range_color=(0, 140),
+                        mapbox_style="carto-positron",
+                        opacity=0.5,
+                        labels={'diff_percentage':'Difference Percentage'},
+                        center={"lat": 53, "lon": -113},
+                        zoom=0.1)
+
+st.plotly_chart(fig13)
+st.write ("Figure 13. inj_down_p")
 
